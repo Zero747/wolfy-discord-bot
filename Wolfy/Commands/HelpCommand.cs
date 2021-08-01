@@ -11,10 +11,11 @@ using Wolfy.Modules;
 
 namespace Wolfy.Commands
 {
-    [CommandModule, Group("help", CanInvokeWithoutSubcommand = true)]
-    public class HelpCommand
+    [CommandModule]
+    public class HelpCommand : BaseCommandModule
     {
-        public async Task ExecuteGroupAsync(CommandContext ctx)
+        [Command("help")]
+        public async Task SendHelp(CommandContext ctx)
         {
             DiscordEmbedBuilder builder = new DiscordEmbedBuilder()
             {
@@ -27,8 +28,16 @@ namespace Wolfy.Commands
             triggerBuilder.AppendLine("There isn't any official help for my triggers. Offer me a <:wolfybone:259416003534913537>, or tell me to do a flip? Maybe regulars know a few more things I can do.");
             builder.AddField("Triggers", triggerBuilder.ToString());
             builder.AddField("Commands", "`!awoo`: Posts an awoo image.\r\n`!winnie`: Posts a winnie image.\r\n`!help`: Displays this message.");
-            DiscordDmChannel chan = await ctx.Client.CreateDmAsync(ctx.Message.Author);
-            await chan.SendMessageAsync(embed: builder);
+
+            /*
+            if(ctx.Member != null)
+            {
+                DiscordDmChannel chan = await ctx.Member.CreateDmChannelAsync();
+                await chan.SendMessageAsync(embed: builder);
+            }
+            */
+            await ctx.Channel.SendMessageAsync(embed: builder);
+
         }
     }
 }

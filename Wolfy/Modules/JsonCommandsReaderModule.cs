@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Wolfy.Commands.Workers;
+using Microsoft.Extensions.Logging;
 
 namespace Wolfy.Modules
 {
-    public class JsonCommandsReaderModule : BaseModule
+    public class JsonCommandsReaderModule : BaseExtension
     {
         string json;
         public List<CommandWorker> workers = new List<CommandWorker>();
@@ -19,7 +20,7 @@ namespace Wolfy.Modules
         {
             Client = client;
             LoadAllWorkers();
-            client.MessageCreated += e => Task.WhenAny(from cw in workers select cw.Process(e));
+            client.MessageCreated += (client, e) => Task.WhenAny(from cw in workers select cw.Process(e));
         }
 
         public void LoadAllWorkers()
@@ -39,16 +40,16 @@ namespace Wolfy.Modules
                         cw.RegisterClient(Client);
                         cw.LoadDataFromJson(tok);
                         workers.Add(cw);
-                        Client.DebugLogger.LogMessage(LogLevel.Debug, "Wolfy", $"Loaded command {cw}", DateTime.Now);
+                        Client.Logger.Log(LogLevel.Debug, $"Wolfy Loaded command {cw}", DateTime.Now);
                     }
                     else
                     {
-                        Client.DebugLogger.LogMessage(LogLevel.Error, "Wolfy", $"Exception loading command workers: Type {t} does not derive from Wolfy.Commands.Workers.CommandWorker\r\n\r\nData: {tok}", DateTime.Now);
+                        Client.Logger.Log(LogLevel.Error, $"Wolfy Exception loading command workers: Type {t} does not derive from Wolfy.Commands.Workers.CommandWorker\r\n\r\nData: {tok}", DateTime.Now);
                     }
                 }
                 else
                 {
-                    Client.DebugLogger.LogMessage(LogLevel.Error, "Wolfy", $"Exception loading command workers: Could not find type Wolfy.Commands.Workers.{type}\r\n\r\nData: {tok}", DateTime.Now);
+                    Client.Logger.Log(LogLevel.Error, $"Wolfy Exception loading command workers: Could not find type Wolfy.Commands.Workers.{type}\r\n\r\nData: {tok}", DateTime.Now);
                 }
             }
         }

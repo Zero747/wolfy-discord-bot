@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Wolfy.Modules
 {
-    public class CooldownManagerModule : BaseModule
+    public class CooldownManagerModule : BaseExtension
     {
         Dictionary<string, DateTime> cooldownBuckets = new Dictionary<string, DateTime>();
         protected override void Setup(DiscordClient client)

@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace Wolfy.Commands
 {
     [CommandModule]
-    public class ImgurCommands
+    public class ImgurCommands : BaseCommandModule
     {
 #pragma warning disable CS0649
         class ImgurImage

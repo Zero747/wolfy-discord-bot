@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Wolfy.Modules
 {
     // 10/10 name tho
-    public class WolfyPersonalityModule : BaseModule
+    public class WolfyPersonalityModule : BaseExtension
     {
         bool weekend = false;
         protected override void Setup(DiscordClient client)
@@ -20,9 +20,9 @@ namespace Wolfy.Modules
             client.Ready += Client_Ready;
         }
 
-        async Task Client_Ready(ReadyEventArgs e)
+        async Task Client_Ready(DiscordClient client, ReadyEventArgs e)
         {
-            DiscordChannel channel = await Client.GetChannelAsync(214523379766525963); //214523379766525963
+            DiscordChannel channel = await Client.GetChannelAsync(564290158078197781); //214523379766525963
             if (channel != null)
             {
 #if DEBUG
@@ -32,11 +32,11 @@ namespace Wolfy.Modules
             }
         }
 
-        async Task Client_Heartbeated(HeartbeatEventArgs e)
+        async Task Client_Heartbeated(DiscordClient client, HeartbeatEventArgs e)
         {
             if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && DateTime.Now.Hour > 9)
             {
-                DiscordChannel channel = await Client.GetChannelAsync(214523379766525963); //214523379766525963
+                DiscordChannel channel = await Client.GetChannelAsync(564290158078197781); //214523379766525963
                 if (channel != null && !weekend)
                 {
 #if DEBUG

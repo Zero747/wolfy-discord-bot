@@ -12,17 +12,17 @@ using DSharpPlus;
 
 namespace Wolfy.Commands
 {
-    [CommandModule, Group("meta"), RequireOwner]
-    public class MetaCommands
+    [CommandModule, Group("meta"), RequirePermissions(Permissions.ViewAuditLog)]
+    public class MetaCommands : BaseCommandModule
     {
         [Command("reload")]
         public async Task ReloadAsync(CommandContext ctx)
         {
             using (HttpClient client = new HttpClient())
             {
-                string result = await client.GetStringAsync("https://raw.githubusercontent.com/spdskatr/wolfy-discord-bot/master/Wolfy/Data/commands_simple.json");
+                string result = await client.GetStringAsync("https://raw.githubusercontent.com/Zero747/wolfy-discord-bot/master/Wolfy/Data/commands_simple.json");
                 File.WriteAllText("Data/commands_simple.json", result);
-                ctx.Client.GetModule<JsonCommandsReaderModule>().LoadAllWorkers();
+                ctx.Client.GetExtension<JsonCommandsReaderModule>().LoadAllWorkers();
             }
             await ctx.RespondAsync("Done!");
         }

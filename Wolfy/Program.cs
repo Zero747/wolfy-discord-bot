@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
+using Microsoft.Extensions.Logging;
 using Wolfy.Commands;
 
 namespace Wolfy
@@ -17,7 +18,7 @@ namespace Wolfy
     {
         public static Program instance;
         public DiscordClient client;
-        public CommandsNextModule commandsNext;
+        public CommandsNextExtension commandsNext;
         public string[] auth;
 
         public Program()
@@ -25,11 +26,11 @@ namespace Wolfy
             auth = File.ReadAllLines("Data/auth.txt");
             client = new DiscordClient(new DiscordConfiguration()
             {
-                UseInternalLogHandler = true,
+                
 #if DEBUG
-                LogLevel = LogLevel.Debug,
+                MinimumLogLevel = LogLevel.Debug,
 #else
-                LogLevel = LogLevel.Info,
+                MinimumLogLevel  = LogLevel.Information,
 #endif
                 TokenType = TokenType.Bot,
                 Token = auth[0]
@@ -39,36 +40,36 @@ namespace Wolfy
                 EnableDms = false,
                 EnableMentionPrefix = false,
                 EnableDefaultHelp = false,
-                StringPrefix = "!"
+                StringPrefixes = new[] { "!" }
             });
             client.ClientErrored += Client_ClientErrored;
             AddAllModules();
         }
 
-        private Task Client_ClientErrored(DSharpPlus.EventArgs.ClientErrorEventArgs e)
+        private Task Client_ClientErrored(DiscordClient client, DSharpPlus.EventArgs.ClientErrorEventArgs e)
         {
-            e.Client.DebugLogger.LogMessage(LogLevel.Error, "DSharpPlus", "Unhandled exception - message: " + e.Exception, DateTime.Now);
+            client.Logger.Log(LogLevel.Error, "DSharpPlus", "Unhandled exception - message: " + e.Exception, DateTime.Now);
             return Task.CompletedTask;
         }
 
         void AddAllModules()
         {
             Stopwatch stopwatch = new Stopwatch();
-            client.DebugLogger.LogMessage(LogLevel.Info, "Wolfy", "Loading modules...", DateTime.Now);
+            client.Logger.Log(LogLevel.Information, "Wolfy Loading modules...", DateTime.Now);
             stopwatch.Start();
             foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (typeof(BaseModule).IsAssignableFrom(t))
+                if (typeof(BaseExtension).IsAssignableFrom(t))
                 {
                     try
                     {
-                        BaseModule mod = (BaseModule)Activator.CreateInstance(t);
-                        client.AddModule(mod);
-                        client.DebugLogger.LogMessage(LogLevel.Debug, "Wolfy", $"Loaded module {t.FullName}", DateTime.Now);
+                        BaseExtension mod = (BaseExtension)Activator.CreateInstance(t);
+                        client.AddExtension(mod);
+                        client.Logger.Log(LogLevel.Debug, $"Wolfy Loaded module {t.FullName}", DateTime.Now);
                     }
                     catch (Exception e)
                     {
-                        client.DebugLogger.LogMessage(LogLevel.Error, "Wolfy", $"Unhandled exception while trying to import module {t.FullName}: {e}", DateTime.Now);
+                        client.Logger.Log(LogLevel.Error, $"Wolfy Unhandled exception while trying to import module {t.FullName}: {e}", DateTime.Now);
                     }
                 }
                 else if (t.IsPublic && t.GetCustomAttribute<CommandModuleAttribute>() != null)
@@ -76,16 +77,16 @@ namespace Wolfy
                     try
                     {
                         commandsNext.RegisterCommands(t);
-                        client.DebugLogger.LogMessage(LogLevel.Debug, "Wolfy", $"Loaded commands {t.FullName}", DateTime.Now);
+                        client.Logger.Log(LogLevel.Debug, $"Wolfy Loaded commands {t.FullName}", DateTime.Now);
                     }
                     catch (Exception e)
                     {
-                        client.DebugLogger.LogMessage(LogLevel.Error, "Wolfy", $"Unhandled exception while trying to import commands {t.FullName}: {e}", DateTime.Now);
+                        client.Logger.Log(LogLevel.Error, $"Wolfy Unhandled exception while trying to import commands {t.FullName}: {e}", DateTime.Now);
                     }
                 }
             }
             stopwatch.Stop();
-            client.DebugLogger.LogMessage(LogLevel.Info, "Wolfy", $"Finished loading modules in {stopwatch.ElapsedMilliseconds}ms", DateTime.Now);
+            client.Logger.Log(LogLevel.Information, $"Wolfy Finished loading modules in {stopwatch.ElapsedMilliseconds}ms", DateTime.Now);
         }
 
         public async Task StartAsync()

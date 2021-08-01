@@ -9,6 +9,7 @@ using DSharpPlus.CommandsNext;
 using Newtonsoft.Json.Linq;
 using Wolfy.Modules;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 
 namespace Wolfy.Commands.Workers
 {
@@ -58,12 +59,12 @@ namespace Wolfy.Commands.Workers
                         }
                         else
                         {
-                            Client.DebugLogger.LogMessage(LogLevel.Error, "Wolfy", $"Exception loading command conditions for worker {this}: Type {t} does not derive from Wolfy.Commands.Workers.CommandCondition\r\n\r\nData: {tok}", DateTime.Now);
+                            Client.Logger.Log(LogLevel.Error, $"Wolfy Exception loading command conditions for worker {this}: Type {t} does not derive from Wolfy.Commands.Workers.CommandCondition\r\n\r\nData: {tok}", DateTime.Now);
                         }
                     }
                     else
                     {
-                        Client.DebugLogger.LogMessage(LogLevel.Error, "Wolfy", $"Exception loading command conditions for worker {this}: Could not find type Wolfy.Commands.Workers.{t}\r\n\r\nData: {cond}", DateTime.Now);
+                        Client.Logger.Log(LogLevel.Error, $"Wolfy Exception loading command conditions for worker {this}: Could not find type Wolfy.Commands.Workers.{t}\r\n\r\nData: {cond}", DateTime.Now);
                     }
                 }
             }
@@ -73,13 +74,13 @@ namespace Wolfy.Commands.Workers
         {
             if (e.Message.Content.IsMatch(trigger, mode))
             {
-                if (cooldown <= 0 || Client.GetModule<CooldownManagerModule>().CanRunCommand(GetUniqueId(), cooldown))
+                if (cooldown <= 0 || Client.GetExtension<CooldownManagerModule>().CanRunCommand(GetUniqueId(), cooldown))
                 {
                     if (chance >= 1.0 || chance > Rand.Instance.NextDouble())
                     {
                         if (conditions.All(c => c.CanExecute(e)))
                         {
-                            Client.GetModule<CooldownManagerModule>().CommandRun(GetUniqueId());
+                            Client.GetExtension<CooldownManagerModule>().CommandRun(GetUniqueId());
                             await SendMessage(e);
                             return true;
                         }

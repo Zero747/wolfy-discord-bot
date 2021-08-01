@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Wolfy.Modules;
 
@@ -16,8 +17,11 @@ namespace Wolfy.Commands.Workers
             bool result = await base.Process(e);
             if (result)
             {
-                Client.GetModule<CooldownManagerModule>().Clear();
-                await e.Message.RespondWithFileAsync("Data/kitty.png");
+                Client.GetExtension<CooldownManagerModule>().Clear();
+
+                var msg = new DiscordMessageBuilder().WithFile("Data/kitty.png", new FileStream("Data/kitty.png", FileMode.Open, FileAccess.Read));
+
+                await e.Message.RespondAsync(msg);
             }
             return result;
         }
