@@ -13,6 +13,8 @@ namespace Wolfy.Modules
     public class WolfyPersonalityModule : BaseExtension
     {
         bool weekend = false;
+        Random rand = new Random();
+        DateTime nextReturn = DateTime.Now.AddMinutes(60);
         protected override void Setup(DiscordClient client)
         {
             Client = client;
@@ -25,16 +27,15 @@ namespace Wolfy.Modules
             DiscordChannel channel = await Client.GetChannelAsync(214523379766525963); //214523379766525963
             if (channel != null)
             {
-#if DEBUG
-#else
+
                 await channel.SendMessageAsync("I\'m back! <:awoo:254007902510120961>");
-#endif
+
             }
         }
 
         async Task Client_Heartbeated(DiscordClient client, HeartbeatEventArgs e)
         {
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && DateTime.Now.Hour > 9)
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && DateTime.Now.Hour == 9)
             {
                 DiscordChannel channel = await Client.GetChannelAsync(214523379766525963); //214523379766525963
                 if (channel != null && !weekend)
@@ -46,6 +47,23 @@ namespace Wolfy.Modules
                     weekend = true;
                 }
             }
+            else
+            {
+                weekend = false; //reset flag
+            }
+
+            //fake restart
+            if(DateTime.Now > nextReturn)
+            {
+                DiscordChannel channel = await Client.GetChannelAsync(214523379766525963); //214523379766525963
+                if (channel != null)
+                {
+                    //generate next time
+                    nextReturn = DateTime.Now.AddMinutes(rand.Next(120, 360));
+                    await channel.SendMessageAsync("I\'m back! <:awoo:254007902510120961>");
+                }
+            }
+
         }
     }
 }
