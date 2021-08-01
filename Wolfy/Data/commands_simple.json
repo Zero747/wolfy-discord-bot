@@ -315,6 +315,12 @@
     "cooldown": 60000
   },
   {
+    "type": "CommandWorker_Simple",
+    "trigger": "wolfy, what the dog doin?",
+    "response": "<a:wagwag:393578594993045506>",
+    "cooldown": 60000
+  },
+  {
     "type": "CommandWorker_ConsecutiveResponses",
     "trigger": "who's a good wolfy?",
     "response": "Is it me?!",
