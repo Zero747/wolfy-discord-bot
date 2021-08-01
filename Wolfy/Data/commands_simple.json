@@ -343,6 +343,17 @@
   },
   {
     "type": "CommandWorker_Simple",
+    "trigger": "Wolfy, stab pink",
+    "response": ":dagger:",
+    "conditions": [
+      {
+        "type": "CommandCondition_RequireRole",
+        "id": 503752769757511690
+      }
+    ]
+  },
+  {
+    "type": "CommandWorker_Simple",
     "trigger": "Wolfy let's hold hands!",
     "response": "<:gabeisprettyfuckingfat:434927245203865600>",
     "cooldown": 60000
@@ -399,10 +410,10 @@
     ]
   },
   {
-      "type": "CommandWorker_Simple",
-      "trigger": "Wolfy, roll!",
-      "response": "<a:awooroll:685689670205702145>",
-      "cooldown": 60000
+    "type": "CommandWorker_Simple",
+    "trigger": "Wolfy, roll!",
+    "response": "<a:awooroll:685689670205702145>",
+    "cooldown": 60000
   },
   {
     "type": "CommandWorker_Simple",

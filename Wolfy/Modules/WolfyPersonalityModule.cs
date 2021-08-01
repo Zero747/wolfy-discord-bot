@@ -22,7 +22,7 @@ namespace Wolfy.Modules
 
         async Task Client_Ready(DiscordClient client, ReadyEventArgs e)
         {
-            DiscordChannel channel = await Client.GetChannelAsync(564290158078197781); //214523379766525963
+            DiscordChannel channel = await Client.GetChannelAsync(214523379766525963); //214523379766525963
             if (channel != null)
             {
 #if DEBUG
@@ -36,7 +36,7 @@ namespace Wolfy.Modules
         {
             if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && DateTime.Now.Hour > 9)
             {
-                DiscordChannel channel = await Client.GetChannelAsync(564290158078197781); //214523379766525963
+                DiscordChannel channel = await Client.GetChannelAsync(214523379766525963); //214523379766525963
                 if (channel != null && !weekend)
                 {
 #if DEBUG
