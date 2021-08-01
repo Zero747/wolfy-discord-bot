@@ -423,6 +423,13 @@
   },
   {
     "type": "CommandWorker_Simple",
+    "trigger": "i'm a penguin",
+    "response": "I'm a wolfy!",
+    "mode": "contains",
+    "cooldown": 60000
+  },
+  {
+    "type": "CommandWorker_Simple",
     "trigger": "i'm a bunny",
     "response": "I'm a wolfy!",
     "mode": "contains",
