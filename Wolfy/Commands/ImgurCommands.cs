@@ -39,16 +39,19 @@ namespace Wolfy.Commands
                     ImgurResponse res = JsonConvert.DeserializeObject<ImgurResponse>(result);
                     if (res.success)
                     {
-                        await ctx.RespondAsync(res.data[Rand.Instance.Next(res.data.Length)].link);
+                        await ctx.Client.SendMessageAsync(ctx.Channel, res.data[Rand.Instance.Next(res.data.Length)].link);
+                        //await ctx.RespondAsync(res.data[Rand.Instance.Next(res.data.Length)].link);
                     }
                     else
                     {
-                        await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
+                        await ctx.Client.SendMessageAsync(ctx.Channel, "Huh? Imgur isn't working properly! ;~;");
+                        //await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
                     }
                 }
                 catch (Exception)
                 {
-                    await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
+                    await ctx.Client.SendMessageAsync(ctx.Channel, "Huh? Imgur isn't working properly! ;~;");
+                    //await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
                 }
             }
         }
@@ -64,16 +67,19 @@ namespace Wolfy.Commands
                     ImgurResponse res = JsonConvert.DeserializeObject<ImgurResponse>(result);
                     if (res.success)
                     {
-                        await ctx.RespondAsync(res.data[Rand.Instance.Next(res.data.Length)].link);
+                        await ctx.Client.SendMessageAsync(ctx.Channel, res.data[Rand.Instance.Next(res.data.Length)].link);
+                        //await ctx.RespondAsync(res.data[Rand.Instance.Next(res.data.Length)].link);
                     }
                     else
                     {
-                        await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
+                        await ctx.Client.SendMessageAsync(ctx.Channel, "Huh? Imgur isn't working properly! ;~;");
+                        //await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
                     }
                 }
                 catch (Exception)
                 {
-                    await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
+                    await ctx.Client.SendMessageAsync(ctx.Channel, "Huh? Imgur isn't working properly! ;~;");
+                    //await ctx.RespondAsync("Huh? Imgur isn't working properly! ;~;");
                 }
             }
         }

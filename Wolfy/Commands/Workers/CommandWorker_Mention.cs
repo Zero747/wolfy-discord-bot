@@ -12,7 +12,8 @@ namespace Wolfy.Commands.Workers
     {
         protected override Task SendMessage(MessageCreateEventArgs e)
         {
-            return e.Message.RespondAsync(string.Format(response, e.Message.MentionedUsers.Select(u => u.Mention).ToArray()));
+            return Client.SendMessageAsync(e.Channel, string.Format(response, e.Message.MentionedUsers.Select(u => u.Mention).ToArray()));
+            //return e.Message.RespondAsync(string.Format(response, e.Message.MentionedUsers.Select(u => u.Mention).ToArray()));
         }
     }
 }

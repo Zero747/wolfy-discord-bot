@@ -92,7 +92,8 @@ namespace Wolfy.Commands.Workers
 
         protected virtual Task SendMessage(MessageCreateEventArgs e)
         {
-            return e.Message.RespondAsync(response);
+            return Client.SendMessageAsync(e.Channel, response);
+            //return e.Message.RespondAsync(response);
         }
 
         public string GetUniqueId()

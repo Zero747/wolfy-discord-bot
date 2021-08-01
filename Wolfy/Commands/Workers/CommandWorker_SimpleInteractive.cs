@@ -45,7 +45,8 @@ namespace Wolfy.Commands.Workers
             {
                 if (membersWaitingForInteraction.Contains(e.Author.Id) && e.Message.Content.IsMatch(waitFor, waitMode))
                 {
-                    await e.Message.RespondAsync(waitReply);
+                    await Client.SendMessageAsync(e.Channel, waitReply);
+                    //await e.Message.RespondAsync(waitReply);
                     membersWaitingForInteraction.Remove(e.Author.Id);
                 }
             }

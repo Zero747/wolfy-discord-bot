@@ -51,7 +51,8 @@ namespace Wolfy.Commands.Workers
                 }
                 if (selected != null)
                 {
-                    await e.Message.RespondAsync(selected.response);
+                    await Client.SendMessageAsync(e.Channel, selected.response);
+                    //await e.Message.RespondAsync(selected.response);
                 }
             }
         }

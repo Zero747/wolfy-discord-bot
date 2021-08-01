@@ -33,7 +33,8 @@ namespace Wolfy.Commands.Workers
                 for (int i = 0; i < responses.Length; i++)
                 {
                     await Task.Delay(1000);
-                    await e.Message.RespondAsync(responses[i]);
+                    await Client.SendMessageAsync(e.Channel, responses[i]);
+                    //await e.Message.RespondAsync(responses[i]);
                 }
             }
             return result;

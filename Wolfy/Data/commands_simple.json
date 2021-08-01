@@ -137,7 +137,7 @@
     "conditions": [
       {
         "type": "CommandCondition_RequireRole",
-        "id": 564292110182776843
+        "id": 503752769757511690
       }
     ]
   },
@@ -149,7 +149,7 @@
     "conditions": [
       {
         "type": "CommandCondition_RequireRole",
-        "id": 214527027112312834
+        "id": 795636990221221908
       }
     ]
   },
@@ -160,7 +160,7 @@
     "conditions": [
       {
         "type": "CommandCondition_RequireRole",
-        "id": 214527027112312834
+        "id": 795636990221221908
       }
     ]
   },
@@ -337,7 +337,7 @@
     "conditions": [
       {
         "type": "CommandCondition_RequireRole",
-        "id": 214527027112312834
+        "id": 795636990221221908
       }
     ]
   },
@@ -394,7 +394,7 @@
     "conditions": [
       {
         "type": "CommandCondition_RequireRole",
-        "id": 214527027112312834
+        "id": 795636990221221908
       }
     ]
   },

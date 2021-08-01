@@ -21,7 +21,9 @@ namespace Wolfy.Commands.Workers
 
                 var msg = new DiscordMessageBuilder().WithFile("Data/kitty.png", new FileStream("Data/kitty.png", FileMode.Open, FileAccess.Read));
 
-                await e.Message.RespondAsync(msg);
+                await Client.SendMessageAsync(e.Channel, msg);
+
+                //await e.Message.RespondAsync(msg);
             }
             return result;
         }

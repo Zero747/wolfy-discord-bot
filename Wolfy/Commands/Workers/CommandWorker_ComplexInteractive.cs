@@ -47,7 +47,8 @@ namespace Wolfy.Commands.Workers
                     InteractiveNode node = nodes.FirstOrDefault(n => n.MatchesTrigger(e.Message.Content));
                     if (node != null)
                     {
-                        await e.Message.RespondAsync(node.response);
+                        await Client.SendMessageAsync(e.Channel, node.response);
+                        //await e.Message.RespondAsync(node.response);
                         membersWaitingForInteraction.Remove(e.Author.Id);
                     }
                 }

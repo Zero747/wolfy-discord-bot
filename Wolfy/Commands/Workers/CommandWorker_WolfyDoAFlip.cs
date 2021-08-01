@@ -12,7 +12,7 @@ namespace Wolfy.Commands.Workers
     {
         protected override async Task SendMessage(MessageCreateEventArgs e)
         {
-            DiscordMessage mess = await e.Message.RespondAsync("Watch this!");
+            DiscordMessage mess = await Client.SendMessageAsync(e.Channel,"Watch this!");
             await Task.Delay(1000);
             await mess.ModifyAsync("<:awoo:254007902510120961>");
             await Task.Delay(1000);
