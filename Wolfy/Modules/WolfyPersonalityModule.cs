@@ -59,7 +59,7 @@ namespace Wolfy.Modules
                 if (channel != null)
                 {
                     //generate next time
-                    nextReturn = DateTime.Now.AddMinutes(rand.Next(120, 360));
+                    nextReturn = DateTime.Now.AddMinutes(rand.Next(180, 420));
                     await channel.SendMessageAsync("I\'m back! <:awoo:254007902510120961>");
                 }
             }
