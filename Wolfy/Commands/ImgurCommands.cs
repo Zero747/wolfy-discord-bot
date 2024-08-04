@@ -35,7 +35,7 @@ namespace Wolfy.Commands
                 try
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Client-ID", Program.instance.auth[1]);
-                    string result = await client.GetStringAsync("https://api.imgur.com/3/album/OdahvVx/images");
+                    string result = await client.GetStringAsync("https://api.imgur.com/3/album/W5lVIkX/images");
                     ImgurResponse res = JsonConvert.DeserializeObject<ImgurResponse>(result);
                     if (res.success)
                     {
@@ -63,7 +63,7 @@ namespace Wolfy.Commands
                 try
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Client-ID", Program.instance.auth[1]);
-                    string result = await client.GetStringAsync("https://api.imgur.com/3/album/ZyjvnSR/images");
+                    string result = await client.GetStringAsync("https://api.imgur.com/3/album/OqDCoYF/images");
                     ImgurResponse res = JsonConvert.DeserializeObject<ImgurResponse>(result);
                     if (res.success)
                     {
