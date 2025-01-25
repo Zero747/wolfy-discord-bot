@@ -42,7 +42,7 @@ namespace Wolfy.Modules
                 {
 #if DEBUG
 #else
-                    await channel.SendMessageAsync("Yay it\'s finally the weekend! Hope everyone is having an amazing Saturday so far!\r\nhttp://i.imgur.com/VKDm9Pj.png");
+                    await channel.SendMessageAsync("Yay it\'s finally the weekend! Hope everyone is having an amazing Saturday so far!\r\nhttps://imgur.com/RNj2coB");
 #endif
                     weekend = true;
                 }
